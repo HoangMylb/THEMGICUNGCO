@@ -1,0 +1,3 @@
+"use client";
+import { useState } from "react";
+export function ContactForm({ application = false }: { application?: boolean }) { const [sent,setSent]=useState(false); return <form className="contact-form" onSubmit={e=>{e.preventDefault();setSent(true);}}><label>{application?"Họ và tên":"Tên của bạn"}<input required name="name" /></label><label>{application?"Số điện thoại / Email":"Số điện thoại"}<input required name="contact" /></label><label>{application?"Vị trí ứng tuyển":"Nội dung"}<textarea required name="message" rows={4} /></label><button className="button button-red" type="submit">{sent?"Đã gửi":"Gửi thông tin"}</button>{sent&&<p className="form-success">Cảm ơn bạn. THÈM sẽ phản hồi sớm nhất có thể.</p>}</form>; }
