@@ -14,12 +14,12 @@ type MenuItem = {
 };
 
 const menuItems: MenuItem[] = [
-  { id: "cuon", number: "01", title: "Bánh tráng cuốn", subtitle: "Trứng lòng đào · Tóp mỡ", description: "Bánh tráng mềm ôm trọn trứng lòng đào, rau thơm, đậu phộng và sốt đậm vị.", highlight: "Mềm, béo, cay vừa", image: "/them-menu-roll.png", motion: "roll" },
-  { id: "tron", number: "02", title: "Bánh tráng trộn", subtitle: "Trứng cút · Tôm khô · Dầu ớt", description: "Từng miếng bánh tráng dẻo được trộn đều cùng vị chua cay, tôm khô và đậu phộng giòn.", highlight: "Đậm vị, giòn vui", image: "/them-menu-mix.png", motion: "mix" },
-  { id: "cham", number: "03", title: "Bánh tráng chấm", subtitle: "Sốt me · Hành phi", description: "Bánh tráng Tây Ninh mỏng mềm, chấm sốt me cay ngọt và hành phi thơm nức.", highlight: "Chua cay, cuốn miệng", image: "/them-menu-dip.png", motion: "dip" },
-  { id: "chay", number: "04", title: "Bánh tráng chay", subtitle: "Đậu hũ · Rau tươi · Sốt cay", description: "Một cuộn thanh mát với rau tươi, đậu hũ áp chảo và chút sốt cay vừa đủ để nhớ.", highlight: "Tươi, nhẹ, vẫn đã", image: "/them-menu-veggie.png", motion: "veggie" },
-  { id: "topping", number: "05", title: "Topping", subtitle: "Đậu phộng · Tóp mỡ · Tôm khô", description: "Thêm một lớp giòn thơm để cuộn bánh tráng của bạn có nhiều tiếng vui hơn.", highlight: "Tùy chỉnh theo cơn thèm", image: "/them-menu-topping.png", motion: "topping" },
-  { id: "do-uong", number: "06", title: "Đồ uống", subtitle: "Trà tắc · Đá lạnh · Bạc hà", description: "Trà tắc mát lạnh, chua ngọt và thơm để cân bằng vị cay của món bánh tráng.", highlight: "Mát lạnh, giải cay", image: "/them-menu-drink.png", motion: "drink" },
+  { id: "cuon", number: "01", title: "Bánh tráng cuốn", subtitle: "Trứng lòng đào · Tóp mỡ", description: "Bánh tráng mềm ôm trọn trứng lòng đào, rau thơm, đậu phộng và sốt đậm vị.", highlight: "Mềm, béo, cay vừa", image: "/them-menu-roll.webp", motion: "roll" },
+  { id: "tron", number: "02", title: "Bánh tráng trộn", subtitle: "Trứng cút · Tôm khô · Dầu ớt", description: "Từng miếng bánh tráng dẻo được trộn đều cùng vị chua cay, tôm khô và đậu phộng giòn.", highlight: "Đậm vị, giòn vui", image: "/them-menu-mix.webp", motion: "mix" },
+  { id: "cham", number: "03", title: "Bánh tráng chấm", subtitle: "Sốt me · Hành phi", description: "Bánh tráng Tây Ninh mỏng mềm, chấm sốt me cay ngọt và hành phi thơm nức.", highlight: "Chua cay, cuốn miệng", image: "/them-menu-dip.webp", motion: "dip" },
+  { id: "chay", number: "04", title: "Bánh tráng chay", subtitle: "Đậu hũ · Rau tươi · Sốt cay", description: "Một cuộn thanh mát với rau tươi, đậu hũ áp chảo và chút sốt cay vừa đủ để nhớ.", highlight: "Tươi, nhẹ, vẫn đã", image: "/them-menu-veggie.webp", motion: "veggie" },
+  { id: "topping", number: "05", title: "Topping", subtitle: "Đậu phộng · Tóp mỡ · Tôm khô", description: "Thêm một lớp giòn thơm để cuộn bánh tráng của bạn có nhiều tiếng vui hơn.", highlight: "Tùy chỉnh theo cơn thèm", image: "/them-menu-topping.webp", motion: "topping" },
+  { id: "do-uong", number: "06", title: "Đồ uống", subtitle: "Trà tắc · Đá lạnh · Bạc hà", description: "Trà tắc mát lạnh, chua ngọt và thơm để cân bằng vị cay của món bánh tráng.", highlight: "Mát lạnh, giải cay", image: "/them-menu-drink.webp", motion: "drink" },
 ];
 
 export function MenuExplorer() {
@@ -44,7 +44,7 @@ export function MenuExplorer() {
               <strong>{item.title}</strong>
               <small>{item.subtitle}</small>
             </span>
-            <img src={item.image} alt="" />
+            <img src={item.image} alt={item.title} loading="lazy" decoding="async" />
             <span className="menu-card-action">Xem món</span>
           </button>
         ))}
