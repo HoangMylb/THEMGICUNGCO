@@ -51,8 +51,9 @@ export function MenuExplorer() {
       </div>
 
       {selected && (
-        <div className="menu-modal-backdrop" role="presentation" onMouseDown={() => setSelected(null)}>
-          <section className={`menu-modal detail-${selected.motion}`} role="dialog" aria-modal="true" aria-labelledby={`menu-modal-${selected.id}`} onMouseDown={(event) => event.stopPropagation()}>
+        <div className="menu-modal-backdrop">
+          <button className="menu-modal-dismiss" type="button" aria-label="Đóng chi tiết món" onMouseDown={() => setSelected(null)} />
+          <section className={`menu-modal detail-${selected.motion}`} role="dialog" aria-modal="true" aria-labelledby={`menu-modal-${selected.id}`}>
             <button className="menu-modal-close" type="button" onClick={() => setSelected(null)} aria-label="Đóng chi tiết món">Đóng</button>
             <div className="menu-modal-art" aria-hidden="true"><img src={selected.image} alt="" /></div>
             <div className="menu-modal-copy">

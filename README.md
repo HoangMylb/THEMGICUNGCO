@@ -118,7 +118,7 @@ THEMGICUNGCO/
 
 ### Testing note
 
-The repository includes a legacy rendered-worker test that targets `dist/server`, while the current application is built with Next.js. It is kept for audit visibility but is not presented as an active test command until it is aligned with the current build output.
+The legacy rendered-worker test was removed because it targeted a `dist/server` output that is not produced by the current Next.js application. Validation currently consists of linting, type checking, and a production build; a future test suite should exercise the Next.js application directly.
 
 - **Sinh migration cơ sở dữ liệu (nếu dùng Drizzle)**:
   ```bash
