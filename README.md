@@ -94,7 +94,7 @@ THEMGICUNGCO/
 
 2. **Cài đặt các gói phụ thuộc**:
    ```bash
-   npm install
+   npm ci
    ```
 
 ### 3. Chạy Ứng Dụng
@@ -116,9 +116,30 @@ THEMGICUNGCO/
   npm run lint
   ```
 
-### Testing note
+- **Kiểm tra type và business rules**:
+  ```bash
+  npm run typecheck
+  npm run test
+  ```
 
-The legacy rendered-worker test was removed because it targeted a `dist/server` output that is not produced by the current Next.js application. Validation currently consists of linting, type checking, and a production build; a future test suite should exercise the Next.js application directly.
+### Testing strategy
+
+Vitest exercises the real cart rules shared by the catalog and checkout drawer: adding an item, incrementing quantity, removing an item at zero, totals, and rejecting malformed local storage. GitHub Actions runs install, lint, typecheck, tests, and the production build.
+
+## Data Flow & Scope
+
+- Menu items are currently a local product catalog in `app/product-catalog.tsx`.
+- The cart is persisted per-browser in `localStorage` under `them-cart`; invalid stored data is ignored.
+- Checkout validates required form fields in the browser and produces an in-session confirmation only. It does not create an order, contact a restaurant, or process payment.
+- `db/schema.ts` is intentionally empty. Drizzle configuration is retained as a future opt-in exploration and is not imported by the application runtime.
+
+This is deliberate portfolio scope: it demonstrates a complete client-side discovery → cart → validated confirmation flow without representing a commercial ordering backend.
+
+## Engineering decisions
+
+Cart mutations are kept in a small pure module (`app/_lib/cart.ts`) so both entry points use the same add, quantity, and total calculations. The UI keeps the existing `localStorage` event boundary; a future real order API would require server-side validation and a database schema rather than trusting client state.
+
+The app retains native `<img>` elements for its static local food imagery. Next.js reports 14 image-optimization warnings, but replacing every image would alter sizing/loading behavior without evidence of a current user-facing regression; this is intentionally deferred.
 
 - **Sinh migration cơ sở dữ liệu (nếu dùng Drizzle)**:
   ```bash
