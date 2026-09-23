@@ -2,13 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { addCartItem, cartCount as getCartCount, cartTotal, changeQuantity, parseCart, type CartItem } from "./_lib/cart";
 
-export type CartItem = {
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-};
+export type { CartItem } from "./_lib/cart";
 
 export function SiteHeader() {
   const [isHidden, setIsHidden] = useState(false);
@@ -68,9 +64,9 @@ export function SiteHeader() {
   useEffect(() => {
     const syncCart = () => {
       try {
-        const items: CartItem[] = JSON.parse(window.localStorage.getItem("them-cart") || "[]");
+        const items = parseCart(window.localStorage.getItem("them-cart"));
         setCartItems(items);
-        setCartCount(items.reduce((sum, item) => sum + item.quantity, 0));
+        setCartCount(getCartCount(items));
       } catch {
         setCartItems([]);
         setCartCount(0);
@@ -103,7 +99,7 @@ export function SiteHeader() {
 
   const saveCart = (items: CartItem[]) => {
     setCartItems(items);
-    const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
+    const totalCount = getCartCount(items);
     setCartCount(totalCount);
     window.localStorage.setItem("them-cart", JSON.stringify(items));
     window.localStorage.setItem("them-cart-count", String(totalCount));
@@ -111,16 +107,7 @@ export function SiteHeader() {
   };
 
   const updateQuantity = (name: string, delta: number) => {
-    const next = cartItems
-      .map((item) => {
-        if (item.name === name) {
-          const newQty = item.quantity + delta;
-          return newQty > 0 ? { ...item, quantity: newQty } : null;
-        }
-        return item;
-      })
-      .filter((item): item is CartItem => item !== null);
-    saveCart(next);
+    saveCart(changeQuantity(cartItems, name, delta));
   };
 
   const removeItem = (name: string) => {
@@ -134,14 +121,10 @@ export function SiteHeader() {
       quantity: 1,
       image: "/them-menu-roll.webp",
     };
-    const found = cartItems.find((x) => x.name === signature.name);
-    const next = found
-      ? cartItems.map((x) => (x.name === signature.name ? { ...x, quantity: x.quantity + 1 } : x))
-      : [...cartItems, signature];
-    saveCart(next);
+    saveCart(addCartItem(cartItems, signature));
   };
 
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = cartTotal(cartItems);
   const formatPrice = (value: number) => `${new Intl.NumberFormat("vi-VN").format(value)}đ`;
 
   const handleOrderNowClick = () => {

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { addCartItem, cartCount, parseCart } from "./_lib/cart";
 
 export type Product = {
   id: string;
@@ -85,8 +86,8 @@ const price = (value: number) => `${new Intl.NumberFormat("vi-VN").format(value)
 const readCart = (): Record<string, number> => {
   if (typeof window === "undefined") return {};
   try {
-    const current = JSON.parse(window.localStorage.getItem("them-cart") || "[]");
-    return current.reduce((map: Record<string, number>, item: { name: string; quantity: number }) => {
+    const current = parseCart(window.localStorage.getItem("them-cart"));
+    return current.reduce((map: Record<string, number>, item) => {
       map[item.name] = (map[item.name] || 0) + (item.quantity || 1);
       return map;
     }, {});
@@ -134,32 +135,13 @@ export function ProductCatalog() {
 
   const addToCart = (product: Product, openCheckout = false) => {
     try {
-      const current = JSON.parse(window.localStorage.getItem("them-cart") || "[]");
-      const foundIndex = current.findIndex((item: { name: string }) => item.name === product.name);
-
-      let next;
-      if (foundIndex >= 0) {
-        next = [...current];
-        next[foundIndex] = {
-          ...next[foundIndex],
-          quantity: (next[foundIndex].quantity || 1) + 1,
-        };
-      } else {
-        next = [
-          ...current,
-          {
-            name: product.name,
-            price: product.price,
-            quantity: 1,
-            image: product.image,
-          },
-        ];
-      }
+      const current = parseCart(window.localStorage.getItem("them-cart"));
+      const next = addCartItem(current, product);
 
       window.localStorage.setItem("them-cart", JSON.stringify(next));
       window.localStorage.setItem(
         "them-cart-count",
-        String(next.reduce((sum: number, item: { quantity: number }) => sum + item.quantity, 0))
+        String(cartCount(next))
       );
       window.dispatchEvent(new Event("them-cart-change"));
 

@@ -2,7 +2,7 @@ name: Validate
 
 on:
   push:
-    branches: [main, portfolio-cleanup/day-6]
+    branches: [main, portfolio-cleanup/day-6, engineering-proof/day-7]
   pull_request:
     branches: [main]
 
@@ -20,4 +20,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test
       - run: npm run build
