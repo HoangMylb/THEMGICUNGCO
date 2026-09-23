@@ -38,3 +38,7 @@ yarn-error.log*
 /.wrangler/
 /outputs/
 /work/
+
+# Local design-review tooling and TypeScript incremental build cache
+/.impeccable/
+*.tsbuildinfo

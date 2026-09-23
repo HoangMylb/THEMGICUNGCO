@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export type CartItem = {
@@ -161,7 +162,7 @@ export function SiteHeader() {
     e.preventDefault();
     if (!cartItems.length) return;
 
-    const orderId = `THEM-${Math.floor(1000 + Math.random() * 9000)}`;
+    const orderId = `THEM-${window.crypto.randomUUID().slice(0, 8).toUpperCase()}`;
     setOrderInfo({
       id: orderId,
       fullName,
@@ -179,18 +180,15 @@ export function SiteHeader() {
 
   return (
     <header className={`site-header${isScrolled ? " is-scrolled" : ""}${isHidden ? " is-hidden" : ""}`}>
-      <a className="wordmark" href="/#top" aria-label="THÈM GÌ CŨNG CÓ">
+      <Link className="wordmark" href="/#top" aria-label="THÈM GÌ CŨNG CÓ">
         THÈM<br />GÌ CŨNG CÓ
-      </a>
+      </Link>
 
       <nav aria-label="Điều hướng chính" className="primary-nav">
-        <a href="/">Trang chủ</a>
+        <Link href="/">Trang chủ</Link>
         <a href="/ve-chung-toi">Về chúng tôi</a>
         <div
           className="nav-cluster"
-          onMouseEnter={() => setIsExploreOpen(true)}
-          onMouseLeave={() => setIsExploreOpen(false)}
-          onFocus={() => setIsExploreOpen(true)}
         >
           <button
             className="nav-trigger"
@@ -234,11 +232,11 @@ export function SiteHeader() {
       </div>
 
       {isCartOpen && (
-        <div className="cart-backdrop" onMouseDown={() => setIsCartOpen(false)}>
+        <div className="cart-backdrop">
+          <button className="cart-backdrop-dismiss" type="button" aria-label="Đóng giỏ hàng" onMouseDown={() => setIsCartOpen(false)} />
           <aside
             className="cart-drawer"
             aria-label="Giỏ hàng và Đặt hàng"
-            onMouseDown={(event) => event.stopPropagation()}
           >
             <button
               className="cart-close"

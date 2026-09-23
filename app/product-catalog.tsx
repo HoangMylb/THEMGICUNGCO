@@ -82,51 +82,38 @@ const categoryList = [
 
 const price = (value: number) => `${new Intl.NumberFormat("vi-VN").format(value)}đ`;
 
+const readCart = (): Record<string, number> => {
+  if (typeof window === "undefined") return {};
+  try {
+    const current = JSON.parse(window.localStorage.getItem("them-cart") || "[]");
+    return current.reduce((map: Record<string, number>, item: { name: string; quantity: number }) => {
+      map[item.name] = (map[item.name] || 0) + (item.quantity || 1);
+      return map;
+    }, {});
+  } catch {
+    return {};
+  }
+};
+
 export function ProductCatalog() {
   const searchParams = useSearchParams();
-  const [category, setCategory] = useState<string>("Tất cả");
   const [kind, setKind] = useState<string>("Tất cả");
   const [sort, setSort] = useState<string>("featured");
-  const [cartMap, setCartMap] = useState<Record<string, number>>({});
+  const [cartMap, setCartMap] = useState<Record<string, number>>(readCart);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Sync category from URL query parameters on load and changes
-  useEffect(() => {
+  const category = useMemo(() => {
     const catParam = searchParams.get("category");
-    if (catParam) {
-      const matched = categoryList.find(
-        (c) => c.toLowerCase() === decodeURIComponent(catParam).trim().toLowerCase()
-      );
-      if (matched) {
-        setCategory(matched);
-      }
-    } else {
-      setCategory("Tất cả");
-    }
+    return categoryList.find((item) => item.toLowerCase() === (catParam || "").trim().toLowerCase()) || "Tất cả";
   }, [searchParams]);
 
-  // Sync cart from localStorage and window events
-  const syncCart = () => {
-    try {
-      const current = JSON.parse(window.localStorage.getItem("them-cart") || "[]");
-      const map: Record<string, number> = {};
-      current.forEach((item: { name: string; quantity: number }) => {
-        map[item.name] = (map[item.name] || 0) + (item.quantity || 1);
-      });
-      setCartMap(map);
-    } catch {
-      setCartMap({});
-    }
-  };
-
   useEffect(() => {
-    syncCart();
+    const syncCart = () => setCartMap(readCart());
     window.addEventListener("them-cart-change", syncCart);
     return () => window.removeEventListener("them-cart-change", syncCart);
   }, []);
 
   const handleCategorySelect = (selected: string) => {
-    setCategory(selected);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       if (selected === "Tất cả") {

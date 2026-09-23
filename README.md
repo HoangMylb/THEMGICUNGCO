@@ -1,20 +1,17 @@
-# 🥢 THÈM GÌ CŨNG CÓ — Bánh Tráng Theo Cách THÈM
+# 🥢 THÈM GÌ CŨNG CÓ — Food Ordering Portfolio Concept
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.2-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 
-> **"Cuốn một miếng, thèm nhiều vị."**  
-> Nền tảng website thương hiệu và thực đơn trực tuyến cho chuỗi bánh tráng **THÈM GÌ CŨNG CÓ** — nơi mang đến những món bánh tráng đậm đà, trứng lòng đào béo ngậy, sốt riêng đặc trưng và tóp mỡ tươi giòn rụm.
+> A portfolio product concept for a Vietnamese food-brand experience: menu discovery, product filtering, store discovery and a client-side cart flow.
 
 ---
 
 ## 📖 Giới Thiệu
 
-**THÈM GÌ CŨNG CÓ** (thành lập từ năm 2021) là thương hiệu ẩm thực đường phố hiện đại, chuyên phục vụ các món bánh tráng chuẩn vị Tây Ninh kết hợp phong cách biến tấu độc đáo. 
-
-Dự án này là website chính thức của thương hiệu, được xây dựng với trải nghiệm người dùng mượt mà, giao diện mang đậm bản sắc thương hiệu (Tone vàng **#FFDE1F**, đỏ ớt, màu sốt đậm và màu kem bánh tráng), tối ưu hóa SEO và hiệu năng hiển thị cao trên mọi thiết bị.
+This repository is an independent portfolio/product study. It is not an official commercial website, ordering system, or affiliation claim for any real-world brand. Product information, locations, pricing and promotions are illustrative.
 
 ---
 
@@ -48,7 +45,7 @@ Dự án này là website chính thức của thương hiệu, được xây d�
 
 - **Frontend Core**: [Next.js 15](https://nextjs.org/) (App Router), [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
 - **Styling & Design System**: [Tailwind CSS v4](https://tailwindcss.com/) & Vanilla CSS tối ưu
-- **ORM & Database**: [Drizzle ORM](https://orm.drizzle.team/) (sẵn sàng tích hợp Cloudflare D1 / SQLite)
+- **Data modelling**: [Drizzle ORM](https://orm.drizzle.team/) schemas are included as an exploration; this UI does not currently connect to a production database.
 - **Code Quality**: ESLint 9, TypeScript ESLint, Prettier
 - **Assets Optimization**: Modern WebP Image Format, Responsive Viewport Support
 
@@ -119,6 +116,10 @@ THEMGICUNGCO/
   npm run lint
   ```
 
+### Testing note
+
+The legacy rendered-worker test was removed because it targeted a `dist/server` output that is not produced by the current Next.js application. Validation currently consists of linting, type checking, and a production build; a future test suite should exercise the Next.js application directly.
+
 - **Sinh migration cơ sở dữ liệu (nếu dùng Drizzle)**:
   ```bash
   npm run db:generate
@@ -140,9 +141,4 @@ THEMGICUNGCO/
 ## 📞 Liên Hệ & Bản Quyền
 
 - **Thương hiệu**: THÈM GÌ CŨNG CÓ
-- **Website**: [https://themgicungco.vn](https://themgicungco.vn)
-- **Fanpage**: [facebook.com/themgicungco](https://facebook.com/themgicungco)
-- **Hotline**: 090 999 9999
-- **Email**: lienhe@themgicungco.vn
-
-*© 2026 THÈM GÌ CŨNG CÓ. All rights reserved.*
+This is a portfolio concept. No commercial contact details or live ordering service are represented by this repository.
